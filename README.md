@@ -15,14 +15,14 @@ Python and Django need to be installed to run the the website
 `pip install django`
 
 ## Usage
-To run the program - open the directory that stores the application
+To run the program - open the directory that stores the application (and run the command below in the terminal)
 
 `python manage.py runserver`
 
 The website will be located in the browser: http://127.0.0.1:8000/
 
 ## Login
-To create a superuser, run the command
+To create a superuser, run the command in the terminal
 
 `python manage.py createsuperuser`
 
