@@ -12,7 +12,7 @@ STRIPE_API_KEY_HIDDEN = ''
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-f3i7k9lc875r#o=&8ywqt5wcga%&7d4zq-$+9d-ya^(ij6tjk7'
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
