@@ -4,7 +4,7 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Strip API Keys
+# Stripe API Keys
 STRIPE_API_KEY_PUBLIC = ''
 STRIPE_API_KEY_HIDDEN = ''
 
@@ -18,7 +18,6 @@ SECRET_KEY = 'django-insecure-f3i7k9lc875r#o=&8ywqt5wcga%&7d4zq-$+9d-ya^(ij6tjk7
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 INSTALLED_APPS = [
@@ -97,7 +96,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-        'OPTIONS': {'min_length': 6}
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
