@@ -1,0 +1,101 @@
+{% load static %}
+<header class="hdr">
+    <div class="hdr-inner">
+        <h1 class="logo"><a href="{% url 'home' %}"><img src="{% static 'images/logo.jpg' %}" alt="logo"></a></h1>
+        <nav class="nav">
+            <ul class="nav_list">
+                <li class="nav_item">
+                    <a href="{% url 'browse' %}" class="nav_link">Browse</a>
+                </li>
+                <li class="nav_item">
+                    <a href="" class="nav_link">New Releases</a>
+                    <ul class="small-nav" id="latest-product"></ul>
+                </li>
+                <li class="nav_item">
+                    <a href="" class="nav_link">Sales</a>
+                    <ul class="small-nav" id="discount-products"></ul>
+                </li>
+                <li class="nav_item">
+                    <a href="#" class="nav_link">Sell</a>
+                </li>
+                <li class="nav_item">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'logout' %}" class="nav_link">Log Out</a>
+                    {% else %}
+                    <a href="{% url 'login' %}" class="nav_link">Log In</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </nav>
+        <div class="hdr_actions">
+            <div class="hdr-search" onclick="openBar()"><i class='bx bx-search' id="search-btn"></i></div>
+            <div class="hdr-cart">
+                <a href="{% url 'cart' %}"><i class='bx bx-shopping-bag' ></i></a>
+                <span id="cart-count-con"></span>
+            </div>
+        </div>
+    </div>
+    <div class="form-container" id="form-container">
+        <form  method="POST" class="search-form" id="search-form" action="{% url 'search-products' %}">
+            {% csrf_token %}
+            <div class="search-element">
+                <div class="search-input">
+                    <input type="text" placeholder="Search Shoes" name="search">
+                </div>
+                <div class="search-clear" onclick="closeBar()"><i class='bx bx-x' id="search-cbtn"></i></div>
+            </div>
+        </form>
+    </div>
+<header/>
+{% block script %}
+<script>
+$(document).ready(function(){
+    $.ajax({
+        type: "GET",
+        url: "{% url 'getNavData' %}",
+        success: function(response){
+            latest_product = response.latest_product
+            discount_product = response.discount_product
+            products_in_cart = response.products_in_cart
+
+
+            for(i=0; i<latest_product.length; i++){
+                $('#latest-product').append(
+                    `<li class="small-nav-item"><a href="">${latest_product[i].product_name}</a></li>` 
+                )
+            }
+            for(i=0; i<discount_product.length; i++){
+                $('#discount-product').append(
+                    `<li class="small-nav-item"><a href="">${discount_shoes[i].product_name}</a></li>` 
+                )
+            }
+
+            if(products_in_cart > 0){
+                $('#cart-count-con').append(
+                    `<span class="cart-count">${products_in_cart}</span>`
+                )
+            }
+        },
+        error: function(response){
+            console.log(false)
+        }
+    });
+});
+
+function openBar() {
+    var x = document.getElementById("form-container");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+};
+
+function closeBar() {    
+var x = document.getElementById("form-container");
+    if (x.style.display === "block") {
+        x.style.display = "none";
+    } 
+};
+</script>
+{% endblock script %}

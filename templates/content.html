@@ -1,0 +1,243 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="main-container">
+    <div class="heading">
+        {% if search %}
+        <div class="heading-title">SEARCH TERM: {{search}}</div>
+        {% else %}
+        <div class="heading-title">{{brand}}</div>
+        {% endif %}
+        <div class="heading-summary">
+            {% if product_count == 0 %}
+            <span>0 shoes found</span>
+            {% else %} 
+            <span id="count">{{product_count}}</span> shoes found 
+            {% endif %}
+        </div>
+    </div>
+    <div class="content">
+        <div class="content-inner">
+            <div class="content-search">
+                <div class="content-filters">
+                    {% if brand == "All Shoes" %}
+                    <ul class="filter-list brand">
+                        <div class="header-filter">BRAND</div>
+                        <li class="list brand_list clicked" id="brand_names">
+                            <span class="brand type">All Brand</span>
+                        </li>
+                        {% for name in all_brand_names %}
+                        <li class="list brand_list" id="brand_names">
+                            <span class="brand type">{{name.brand_name}}</span>  
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    <ul class="filter-list price">
+                        <div class="header-filter price-hdr">
+                            <span style="text-transform: uppercase">PRICE RANGE</span>
+                            <span onclick="openfilter()" id="open-btn"><i class='bx bx-minus id='c-btn'></i></span>
+                        </div>
+                        <div id="filter-list-price">
+                            <li class="list price_list clicked" id="prices">
+                                <span class="price" id="uppercase">All Prices</span>
+                            </li>
+                            <li class="list price_list" id="price-range">
+                                <span class="price">£25 & Under</span>
+                            </li>
+                            <li class="list price_list" id="price-range">
+                                <span class="price">£50 TO £100</span>
+                            </li>
+                            <li class="list price_list" id="price-range">
+                                <span class="price">£101 to £200</span>
+                            </li>
+                            <li class="list price_list" id="price-range">
+                                <span class="price">£201 to £300</span>
+                            </li>
+                            <li class="list price_list" id="price-range">
+                                <span class="price" id="uppercase">£301 & Over</span>
+                            </li>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+            <div class="content-container">
+                <div class="content-inner">
+                    <ul class="content-list">
+                        {% for product in products %}
+                        <a href="{% url 'product-page' product.slug %}" class="product-card">
+                            <li class="product-container">
+                                <span class="product-brand">{{product.brand_name}}</span>
+                                <div class="product-img-container">
+                                    <div class="product-image"><img src="{{product.images.url}}" alt="{{product.slug}}--image" class="image"></div>
+                                </div>
+                                <div class="row-card-content">
+                                    <div class="product-card-head">
+                                        <p class="product-card-title larger">{{product.product_name}}</p>
+                                    </div>
+                                    {% if product.discount_price != None %}
+                                    <div class="product-card-price larger" style="color: red;">
+                                        <span>£</span><span id="product-price">{{product.discount_price|floatformat:2}}</span>
+                                        <strike style="font-size: 0.8rem;">£{{product.price|floatformat:2}}</strike>
+                                    </div>
+                                    {% else %}
+                                    <div class="product-card-price larger">
+                                    <span>£</span><span id="product-price">{{product.price|floatformat:2}}</span>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </li>
+                        </a>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block script %}
+<script>
+function  openfilter() {
+    var filter = document.getElementById('filter-list-price');
+    if (!filter.style.display || filter.style.display == "none") {
+        filter.style.display = "block";
+        document.getElementById("open-btn").innerHTML = "<i class='bx bx-minus id='c-btn'></i>"
+    }else{
+        filter.style.display = "none";
+        document.getElementById("open-btn").innerHTML = "<i class='bx bx-plus' id='c-btn'></i>"
+    }
+}
+
+// using j-query to filter by price and brand
+$('li.list').on("click", function(e) {
+    var filter_brand = $(this).find('.brand').text();
+    var filter_price = $(this).find('.price').text();
+    var product = $('.product-container');
+    
+    // checking which filter have been applied and or are active
+    if (filter_price != ""){
+        $('li.price_list').removeClass('clicked')
+        $(this).addClass('clicked')
+        filter_brand = $('li.clicked').find('.brand').text();
+    }else if(filter_brand != ""){
+        $('li.brand_list').removeClass('clicked')
+        $(this).addClass('clicked')
+        filter_price = $('li.clicked').find('.price').text();
+    }
+    
+    $.each(product, function(i, selector) {
+        product_brand = $(this).find('.product-brand').text();
+        product_price = $(this).find('#product-price').text();
+    
+        // on the brand pages - there is no filter for brands
+        // therefore filter_brand will always equal to the product brand name of the page
+        if(filter_brand === ""){
+            filter_brand = product_brand
+        }
+        // then either filtering the product by price or brand
+        if(filter_brand === "All Brand"){
+            if(filter_price === "All Prices"){
+                $(selector).addClass('show');
+                $(selector).removeClass('hidden');
+            }else if(filter_price === "£25 & Under"){
+                if(product_price <= 25){
+                $(selector).addClass('show');
+                $(selector).removeClass('hidden');
+                }else{
+                $(selector).removeClass('show');
+                $(selector).addClass('hidden'); 
+                }
+            }else if(filter_price === "£50 to £100"){
+                if(product_price >= 50 && product_price <= 100){
+                $(selector).addClass('show');
+                $(selector).removeClass('hidden');
+                }else{
+                $(selector).removeClass('show');
+                $(selector).addClass('hidden'); 
+                }
+            }else if(filter_price === "£101 to £200"){
+                if(product_price >= 101 && product_price <= 200){
+                $(selector).addClass('show');
+                $(selector).removeClass('hidden');
+                }else{
+                $(selector).removeClass('show');
+                $(selector).addClass('hidden'); 
+                }
+            }else if(filter_price === "£201 to £300"){
+                if(product_price >= 201 && product_price <= 300){
+                $(selector).addClass('show');
+                $(selector).removeClass('hidden');
+                }else{
+                $(selector).removeClass('show');
+                $(selector).addClass('hidden'); 
+                }
+            }else if(filter_price === "£301 & Over"){
+                if(product_price >= 301){
+                $(selector).addClass('show');
+                $(selector).removeClass('hidden');
+                }else{
+                $(selector).removeClass('show');
+                $(selector).addClass('hidden'); 
+                }
+            }
+        }else{
+            if(product_brand ===  filter_brand && filter_price === "All Prices"){
+            $(selector).addClass('show');
+            $(selector).removeClass('hidden');
+        }else if(product_brand ===  filter_brand && filter_price === "£25 & Under"){
+            if(product_price <= 25){
+                $(selector).addClass('show');
+                $(selector).removeClass('hidden');
+            }else{
+                $(selector).removeClass('show');
+                $(selector).addClass('hidden'); 
+            }
+        }else if(product_brand ===  filter_brand && filter_price === "£50 to £100"){
+            if(product_price >= 50 && product_price <= 100){
+                $(selector).addClass('show');
+                $(selector).removeClass('hidden');
+            }else{
+                $(selector).removeClass('show');
+                $(selector).addClass('hidden'); 
+            }
+        }else if(product_brand ===  filter_brand && filter_price === "£101 to £200"){
+            if(product_price >= 101 && product_price <= 200){
+                $(selector).addClass('show');
+                $(selector).removeClass('hidden');
+            }else{
+                $(selector).removeClass('show');
+                $(selector).addClass('hidden'); 
+            }
+        }else if (product_brand ===  filter_brand && filter_price === "£201 to £300"){
+            if(product_price >= 201 && product_price <= 300){
+                $(selector).addClass('show');
+                $(selector).removeClass('hidden');
+            }else{
+                $(selector).removeClass('show');
+                $(selector).addClass('hidden'); 
+            }
+        }else if(product_brand ===  filter_brand && filter_price === "£301 & Over"){
+            if(product_price >= 301){
+                $(selector).addClass('show');
+                $(selector).removeClass('hidden');
+            }else{
+                $(selector).removeClass('show');
+                $(selector).addClass('hidden'); 
+            }
+        }else{
+            $(selector).removeClass('show');
+            $(selector).addClass('hidden'); 
+        }
+        }
+    });
+})
+
+$('.list').bind('click', function() {
+    var visible_elements = $('.show').length;
+    $("#count").html(visible_elements);
+});
+
+</script>
+{% endblock %}

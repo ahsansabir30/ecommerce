@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="layout">
+    <div class="tag-list">
+        {% for name in brand_names %}
+        <a href="{% url 'browse-products-brand' name.slug %}" class="btn btn-tag">{{name.brand_name}}</a>
+        {% endfor %}
+    </div>
+</div>
+<div class="slides" data-carousel>
+    <div class="slides-layout" data-slides>
+        <div class="slide-items" data-active>
+            <div class="slide-info">
+                <h2 class="slide-heading">Adidas NMD</h2>
+                <p class="slide-colour">Pitch Black</p>
+                <a href="#" class="slide-link btn">Shop Now</a>
+            </div>
+            <div class="slide-image">
+                <img src="static/images/adidas-nmd-black.jpg" alt="adidas-nmd">
+            </div>
+            <div class="slide-nav-con">
+                <div class="slide-nav slide-nav-rside">
+                    <div class="slide-nav_left" data-carousel-button="prev"><i class='bx bxs-chevron-left' ></i></div>
+                    <div class="slide-nav_inner">
+                        <div class="slide-nav-inner_active" id="counter">01</div>
+                        <div class="slide-nav-inner_total">/02</div>
+                    </div>
+                    <div class="slide-nav-right" data-carousel-button="next"><i class='bx bxs-chevron-right' ></i></div>
+                </div>
+            </div>
+            <div class="ftr-divider-l"></div>
+        </div>
+        <div class="slide-items">
+            <div class="slide-info">
+                <h2 class="slide-heading">Nike Dunks</h2>
+                <p class="slide-colour">White</p>
+                <a href="#" class="slide-link btn">Shop Now</a>
+            </div>
+            <div class="slide-image">
+                <img src="static/images/nike-dunk.png" alt="nike-dunk-white">
+            </div>
+            <div class="slide-nav-con">
+                <div class="slide-nav slide-nav-rside">
+                    <div class="slide-nav_left" data-carousel-button="prev"><i class='bx bxs-chevron-left' ></i></div>
+                    <div class="slide-nav_inner">
+                        <div class="slide-nav-inner_active" id="counter">02</div>
+                        <div class="slide-nav-inner_total">/02</div>
+                    </div>
+                    <div class="slide-nav-right" data-carousel-button="next"><i class='bx bxs-chevron-right' ></i></div>
+                </div>
+            </div>
+            <div class="ftr-divider-r"></div>
+        </div>
+    </div>
+</div>
+<div class="layout-cards">
+    <div class="home-row">
+        <div class="home-hover">
+            <div class="row-header">
+                <div class="row-title">Popular</div>
+                <div class="row-arrows">
+                    <div class="left-arrow pre-btn" id="prevBtn"><i class='bx bxs-chevron-left' ></i></div>
+                    <div class="right-arrow nxt-btn" id="nextBtn" ><i class='bx bxs-chevron-right' ></i></div>
+                </div>
+            </div>
+            <div class="row-container" id="product-container">
+                <ul class="row-tiles" id="tiles">
+                    {% for product in latest_product %}
+                    <li class="row-cards" id="cards">
+                        <a href="{% url 'product-page' product.slug %}" class="card-inner">
+                            <div class="row-card-picture">
+                                <img src="{{product.images.url}}" alt="{{product.slug}}-img" class="product-card-image">
+                            </div>
+                            <div class="row-card-content">
+                                <div class="product-card-head">
+                                    <p class="product-card-title">{{product.product_name}}</p>
+                                </div>
+                                {% if product.discount_price != None %}
+                                <div class="product-card-price" style="color: red;">£{{product.discount_price|floatformat:2}}</div>
+                                {% else %}
+                                <div class="product-card-price">£{{product.price|floatformat:2}}</div>
+                                {% endif %}
+                            </div>
+                        </a>
+                    </li>             
+                    {% endfor %} 
+                </ul>
+            </div>
+        </div>
+    </div>    
+</div>                 
+{% endblock %}
+{% block script %}
+<script>
+// getting data from the server (i.e. live data)
+// used for learning AJAX (would not use this in the in deployment)
+$(document).ready(function(){
+    setInterval(function()
+    {
+    $.ajax({
+        type: "GET",
+        url: "{% url 'getProduct' %}",
+        success: function(response){
+            console.log(response)
+            data = response.product
+            console.log(data.length)
+            $("#tiles").empty();
+            for( i=0; i<data.length; i++){
+                $('#tiles').append(
+                    `
+                    <li class="row-cards">
+                        <a href="#" class="card-inner">
+                            <div class="row-card-picture">
+                                <img src="media/${data[i].images}" alt="" class="product-card-image">
+                            </div>
+                            <div class="row-card-content">
+                                <div class="product-card-head">
+                                    <p class="product-card-title">${data[i].product_name}</p>
+                                </div>
+                                <div class="product-card-price">£${data[i].price}</div>
+                            </div>
+                        </a>
+                    </li>     
+                    ` 
+                )
+            }
+        },
+        error: function(response){
+            console.log(false)
+        }
+    });
+    }, 1000000000);
+});
+
+// main carousel
+const buttons = document.querySelectorAll("[data-carousel-button]")
+
+buttons.forEach(button => {
+    button.addEventListener("click", () => {
+        const offset = button.dataset.carouselButton === "next" ? 1 : -1
+        const slides = button.closest("[data-carousel]").querySelector("[data-slides]")
+
+
+    const activeSlide = slides.querySelector("[data-active]")
+    let newIndex = [...slides.children].indexOf(activeSlide) + offset
+    if (newIndex < 0) newIndex = slides.children.length -1
+    if (newIndex >= slides.children.length) newIndex = 0
+
+    slides.children[newIndex].dataset.active = true
+    delete activeSlide.dataset.active
+    })
+})
+
+// secondary carousel
+const tilesContainer = [...document.querySelectorAll('.row-tiles')];
+const nextBtn = [...document.querySelectorAll('#nextBtn')];
+const prevBtn = [...document.querySelectorAll('#prevBtn')];
+
+tilesContainer.forEach((item, i) => {
+    let containerDimentions = item.getBoundingClientRect();
+    let containerWidth = containerDimentions.width;
+
+    nextBtn[i].addEventListener('click', () => {
+        item.scrollLeft += containerWidth;
+    })
+
+    prevBtn[i].addEventListener('click', () => {
+        item.scrollLeft -= containerWidth;
+    })
+})
+
+</script>
+{% endblock %}

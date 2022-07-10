@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="order-con">
+    {% if order_status == 'Pass' %}
+    <div class="order-hdr">
+        <div class="success-title">
+            <div class="success-title">
+                <div class="success-image"><i class='bx bxs-package'></i></div>
+                <div class="success-text">
+                    <h2 class="success-hdr">YOUR ORDER WAS SUCCESSFUL</h2>
+                    <p class="success-sub">Order Number: {{order.id}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% for item in items_in_order %}
+    <div class="order-summary">
+        <div class="order-product-img"><img src="{{item.product.images.url}}" alt="product-image"></div>
+        <div class="order-summary-con">
+            <div class="order-content">
+                <div class="order-product-header">{{item.product}}</div>
+                <div class="order-product-size">UK {{item.size}}</div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="order-hdr failed">
+        <div class="success-title">
+            <div class="success-title">
+                <div class="success-image"><i class='bx bx-error'></i></div>
+                <div class="success-text">
+                    <h2 class="success-hdr">YOUR ORDER HAS FAILED: PAYMENT HAS NOT GONE THROUGH</h2>
+                    <p class="success-sub">Please try again!!</p>
+                </div>
+            </div>
+        </div>
+    </div>  
+    {% endif %}
+</div>
+{% endblock %}

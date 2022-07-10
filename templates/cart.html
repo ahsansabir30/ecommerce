@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if cart == "Empty" %}
+<div class="cart-layout">
+    <div class="cart-hdr">Cart Summary</div>
+    <div class="cart-notice">
+        <i class='bx bxs-notification' id="notification"></i>
+        <div class="cart-title">Your cart is empty</div>
+    </div>
+</div>
+{% else %}
+<div class="cart-layout">
+    <div class="cart-hdr">YOUR CART SUMMARY</div>
+    <div class="cart-details">
+        {% for item in cart %}
+        <div class="cart-inner">
+            <div class="cart-product-img"><img src="{{item.product.images.url}}" alt="product-image"></div>
+            <div class="cart-summary-con">
+                <div class="cart-product-content">
+                    <div class="cart-product-title"><a href="{% url 'product-page' item.product.slug %}" style="padding-left: 0;">{{item.product}}</a></div>
+                    <div class="cart-product-size">UK {{item.size}}</div>
+                </div>
+                <form class="cart-actions">
+                    {% csrf_token %}
+                    <div class="cart-product-price">
+                        {% if item.product.discount_price > 0 %}
+                        <span style="color: red;">£</span><span class="price" style="color: red;">{{item.product.discount_price|floatformat:2}}</span>
+                        {% else%}
+                        <span>£</span><span class="price">{{item.product.price|floatformat:2}}</span>
+                        {% endif %}
+                    </div>
+                    <div class="cart-product-remove" value="{{item.id}}">Remove</div>
+                    <input type="hidden" value="{{item.id}}"  class="cart-id"></input>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="cart-divider"></div>
+    <div class="cart-checkout">
+        <div class="cart-total-price">
+            <span>£</span><span class="total-price"></span>
+        </div>
+        <div class="cart-checkout-btn"><a href="{% url 'checkout' %}"><button class="checkout">CHECKOUT</button></a></div>
+    </div>
+</div>
+<div class="alert"></div>
+{% endif %}
+{% endblock %}
+
+{% block script %}
+<script>
+$(document).ready(function () {
+    var total = 0;
+    var display_price = $('.total-price');
+
+    $('.price').each(function(){
+        var price = $(this).text()
+        total += parseFloat(price);
+    });
+
+    total = parseFloat(total).toFixed(2);
+    $(display_price).text(total)
+
+});
+
+$('.cart-product-remove').click(function(e){
+    e.preventDefault();
+    var cart_id = $(this).closest('.cart-actions').find('.cart-id').val(); 
+    var token = $('input[name=csrfmiddlewaretoken]').val();
+    
+    $.ajax({
+        method: "POST",
+        url: "/delete-from-cart",
+        data: {
+            'cart_id': cart_id,
+            csrfmiddlewaretoken: token
+        },
+        success: function(response){
+            data = response.status
+            console.log(data)
+            if(data == 'success'){
+                console.log("Deletion was successful")
+                location.reload();
+            }else{
+                var alert = $('.alert');
+                $(alert).addClass('visible').text(data).fadeToggle(4000, "swing")
+            }
+        }
+    });    
+});
+</script>
+{%  endblock %}

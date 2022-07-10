@@ -1,0 +1,222 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="checkout">
+    <div class="checkout-inner">
+        <form action="" class="checkout-form">
+            {% if shipping_details != None %}
+            <div class="checkout-default">
+                <div class="checkout-default-image"><i class='bx bx-home-alt' ></i></div>
+                <div class="checkout-default-title">
+                    <p class="larger-title" id="centre-title">USING DEFAULT ADDRESS:</p>
+                    <div class="shipping-details">
+                        <p class="shipping-hdr">{{shipping_details.first_name}} {{ shipping_details.last_name}}</p>
+                        <p class="shipping-address">{{shipping_details.street_address}}</p>
+                        <p class="shipping-postcode">{{shipping_details.postcode}}</p>
+                        <p class="contanct-no">{{shipping_details.number}}</p>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="checkout-default">
+                <div class="checkout-default-image"><i class='bx bxs-error-circle'></i></i></div>
+                <div class="checkout-default-title">
+                    <p class="larger-title">DEFAULT ADDRESS HAS NOT BEEN FOUND<p/>
+                    <p class="small-title">Please fill in the form below</p> 
+                </div>
+            </div>
+            {% endif %}
+            <div class="checkout-hdr">
+                {% if shipping_details != None %} Alternate Shipping Details {% else %} Your Details {% endif %}
+            </div>
+            <div class="shipping-info">
+                <div class="form-inner">
+                    <input name="firstname" type="text" class="form-input" placeholder="Forename">
+                    <input name="lastname" type="text" class="form-input" placeholder="Surname">    
+                </div>
+                <div class="form-inner">
+                    <input name="address" type="text" class="form-input" placeholder="Address">
+                </div>
+                <div class="form-inner">
+                    <input name="postcode" type="text" class="form-input" placeholder="Postcode">
+                    <input name="city" type="text" class="form-input" placeholder="City/ Town">
+                </div>
+            </div>
+            <div class="contact-info">
+                <div class="form-inner">
+                    <input name="email" type="email" class="form-input" placeholder="Alternative Email">    
+                </div>
+                <div class="form-inner">
+                    <input name="number" type="text" class="form-input" placeholder="Contact">    
+                </div>
+            </div>
+            <div class="default-info">
+                <label>Is this your default address?</label>
+                <input type="checkbox" name="default-address" id="default-checkbox" class="default-address-check">
+            </div>
+            <div class="errors-con" style="color:red; margin-top:10px;">
+                <ul><li id="errors"></li></ul>
+            </div>
+        </form>
+        <div class="small-cart">
+            <div class="small-cart-inner">
+                <div class="small-cart-header">Cart</div>
+                {% for item in cart %}
+                <div class="small-cart-con">
+                    <div class="small-product-hrd">{{item.product}}</div>
+                    {% if item.product.discount_price == None %}
+                    <div class="small-cart-price">
+                        <span>£</span><span class="price">{{item.product.price|floatformat:2}}</span>
+                    </div>
+                    {% else %}
+                    <div class="small-cart-price" style="color: red;">
+                        <span>£</span><span class="price">{{item.product.discount_price|floatformat:2}}</span></div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                <div class="cart-divider"></div>
+                <div class="cart-total-small">
+                    <span>£</span><span class="total-price"></span>
+                </div>
+                <button class="s-checkout-btn" onclick="buy(event)">Checkout</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script type="application/javascript" src="https://js.stripe.com/v3/"></script>
+<script>
+$(document).ready(function () {
+    var total = 0;
+    var display_price = $('.total-price');
+
+    $('.price').each(function(){
+        var price = $(this).text()
+        total += parseFloat(price);
+    });
+
+    total = parseFloat(total).toFixed(2);
+    $(display_price).text(total)
+
+});
+
+
+function validateForm(data) {
+        let errors = []
+
+        if (data.firstname === '') {
+            errors.push('First name is empty')
+        }
+
+        if (data.lastname === '') {
+            errors.push('Last name is empty')
+        }
+
+        if (data.address === '') {
+            errors.push('Address is empty')
+        }
+
+        if (data.postcode === '') {
+            errors.push('Postcode is empty')
+        }
+
+        if (data.city === '') {
+            errors.push('City is empty')
+        }
+
+        if (errors.length>0){
+            console.log("Errors are present")
+        }
+        
+        for(i=0; i<errors.length; i++){
+            $('#errors').append(
+                `<li>${errors[i]}</li>` 
+            )
+        }
+
+        return errors
+}
+
+function buy(event) {
+    event.preventDefault()
+
+    let default_address_present = '{{shipping_details.default}}'
+    
+    if(default_address_present === 'True'){
+        let data = {
+            'default_address': 'True'
+        }
+
+        var stripe = Stripe('{{public_key}}')
+        fetch('/process/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            credentials: 'same-origin',
+            body: JSON.stringify(data)
+        })
+        .then(function(response) {
+            return response.json()
+        })
+        .then(function(session) {
+            return stripe.redirectToCheckout({ sessionId: session.session.id })
+        })
+        .then(function(result) {
+            if (result.error) {
+                alert(result.error.message)
+            }
+        })
+        .catch(function(error) {
+            console.log('Errors', error)
+        })
+
+    }else{
+    
+        let data = {
+        'default_address': 'False',
+        'firstname': document.querySelector('input[name=firstname]').value,
+        'lastname': document.querySelector('input[name=lastname]').value,
+        'address': document.querySelector('input[name=address]').value,
+        'postcode': document.querySelector('input[name=postcode]').value,
+        'city': document.querySelector('input[name=city]').value,
+        'email': document.querySelector('input[name=email]').value,
+        'number': document.querySelector('input[name=number]').value, 
+        'default': document.querySelector('.default-address-check').checked,  
+        }                                                 
+        
+        
+        let errors = validateForm(data)
+        if (errors.length <= 0) {
+            var stripe = Stripe('{{public_key}}')
+            fetch('/process/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            credentials: 'same-origin',
+            body: JSON.stringify(data)
+        })
+        .then(function(response) {
+            return response.json()
+        })
+        .then(function(session) {
+            return stripe.redirectToCheckout({ sessionId: session.session.id })
+        })
+        .then(function(result) {
+            if (result.error) {
+                alert(result.error.message)
+            }
+        })
+        .catch(function(error) {
+            console.log('Errors', error)
+        })
+        }
+        return false
+    };
+}
+</script>
+{% endblock %}

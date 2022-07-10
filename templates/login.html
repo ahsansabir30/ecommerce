@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="s-container">
+    <div class="s-main-container">
+        <div class="s-inner-container">
+            <div class="s-header">
+                LOG IN 
+            </div>
+            <form method="POST" action="">
+                {% csrf_token %}
+                {% for message in messages %}
+                <div class="form-error">
+                    {{ message }}
+                </div>
+                {% endfor %}
+                <div class="input-con">
+                    <div class="label-name">
+                        <label for="">EMAIL</label>
+                    </div>
+                    <input class="input-field" type="email" name="email"/>
+                </div>
+                <div class="input-con">
+                    <div class="label-name">
+                        <label for="">PASSWORD</label>
+                    </div>
+                     <input class="input-field" type="password" name="password"/>
+                </div>
+                <button class="s-button">LOG IN</button>
+            </form>
+            <div class="bottom-con">
+                <a href="{% url 'sign-up' %}" class="bottom-hdr">Sign Up</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

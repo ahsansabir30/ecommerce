@@ -1,0 +1,52 @@
+.s-container{
+    width: 30%;
+    margin: auto;
+  
+}
+
+.s-main-container{
+    margin: 4rem 0;
+}
+
+.s-header{
+    font-size: 3rem;
+    font-weight: 600;
+}
+
+.input-con{
+    margin: 10px 0;
+}
+
+.input-field{
+    margin-top: 10px;
+    width: 100%;
+    border: solid 1px #d0d0d0;
+    font-size: 0.9rem;
+    padding: 15px;
+    font-weight: bold;
+}
+
+.s-button{
+    margin-top: 5px;
+    padding: 0.8rem;
+    width: 100%;
+    font-size: 1.2rem;
+    border: solid 1px #d0d0d0;
+    background-color: #101010;
+    color:  #fff;
+    cursor: pointer;
+}
+
+.s-button:hover{
+    background-color:  #fff;
+    color:  #101010;
+}
+
+.bottom-con{
+    margin-top: 15px;
+}
+
+.form-error{
+    color: red;
+    text-transform: uppercase;
+}

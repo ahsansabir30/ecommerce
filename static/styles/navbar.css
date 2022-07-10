@@ -1,0 +1,258 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+body { 
+    position: absolute; 
+    min-width: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+body::-webkit-scrollbar { 
+    display: none; 
+}
+
+.hdr{
+    height: 70px;
+    background-color: #fff;
+    box-shadow: 0 1px 0px rgb(0 0 0 / 5%);
+    color: #101010;
+}
+
+
+.hdr-inner{
+    width: 90%;
+    display: flex;
+    align-items: center;
+    height: 70px;
+    margin: 0px 2em;
+}
+
+.hdr-inner img{
+    border-style: none;
+    display: block;
+    width: 105px;
+}
+
+ul{
+    list-style-type: none;
+    display: flex;
+    width: 100%;
+}
+
+.hdr_actions{
+    display: flex;
+}
+
+.nav{
+    margin-left: auto;
+    margin-right: 3rem;
+    z-index: 5;
+}
+
+.nav_item{
+    color: #101010;
+    font-weight: 800;
+    font-size: 1rem;
+    line-height: 2rem;
+    letter-spacing: -0.01em;
+    margin: 12px;
+}
+
+a{
+    color: #101010;
+    background-color: transparent;
+    text-decoration: none;
+    padding: 0.75em 0.18em;
+}
+
+a:hover{
+    color: #0c3390;
+}
+
+#search-cbtn:hover,
+#search-btn:hover{
+    color: #0c3390;
+    cursor: pointer;
+}
+
+.nav__link {
+    position: relative;
+    display: block;
+    text-transform: capitalize;
+    transition: 0s background-color;
+}
+
+.hdr_actions{
+    display: flex;
+}
+
+.hdr_actions .hdr-search,
+.hdr_actions .hdr-cart{
+    position: relative;
+    top: 4px;
+    color: #101010;
+    box-sizing: content-box;
+    font-size: 1.4rem;
+    padding: 1.5rem 1em;
+    height: 2rem;
+}
+
+.form-container{
+    display: none;
+    position: absolute;
+    height: 95px;
+    width: 100%;
+    z-index: 2;
+    background-color: #fff;
+    box-shadow: 0 1px 0px rgb(0 0 0 / 5%);
+}
+
+.search-form{
+    margin: 8px 30px;
+    background-color: #fff;
+}
+
+.search-element{
+    max-width: 100%;
+}
+
+.search-input input{
+    height: 1em;
+    border: none;
+    border-radius: 0px;
+    padding-bottom: 1.8em;
+    width: 90%;
+    float: left;
+}
+
+.search-input input[type=text] {
+    border: none;
+    background-color: transparent;
+    outline: none;
+    font-weight: 800;
+    font-size: 1.8em;
+    padding-top: 0.8em;
+    color: #B2BABB;
+    padding-bottom: 1.8em;
+    margin: 10px;
+}
+
+.search-clear{
+    position: absolute;
+    right: 145px;
+    top: 24px;
+    font-size: 2rem;
+}
+
+.small-nav{
+    display: none;
+    position: absolute;
+    flex-direction: column;
+    margin: 20px -17px;
+    z-index: 5;
+    max-width: 19%;
+    background-color: #fff;
+    border: solid 1px #ededed;
+    color: #777;
+    text-transform: uppercase;
+}
+
+.small-nav li{
+    padding: 5px 30px; 
+    color: #424949;
+    font-size: 0.8rem;
+}
+
+.small-nav li:before{
+    content: "";
+    position: absolute;
+    left: 0;
+    top: -2px;
+    width: 38%;
+    height: 2px;
+    background-color: black;
+}
+
+li:hover .small-nav{
+    display: block;
+    transition-delay:20s;
+}
+
+.layout{
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    flex: 1;
+    box-shadow: 0 1px 0px rgb(0 0 0 / 5%);
+}
+
+.tag-list{
+    display: block;
+    text-align: center;
+    white-space: nowrap;
+    width: 100vw;
+    margin: 0 0.2em;
+    padding: 1em 1.8rem;
+}
+
+.tag-list>* {
+    display: inline-block;
+    margin: 0 0.2em;
+}
+
+a .btn{
+    text-decoration: none !important;
+}
+
+.btn{
+    appearance: none;
+    align-items: center;
+    background-color: #fff;
+    border: solid 1px #ededed;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    justify-content: center;
+    line-height: 1;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.btn-tag{
+    background-color: #fff;
+    border-radius: 999px;
+    color: #101010;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.9em 1.7em;
+    text-transform: none;
+}
+
+#higlight:hover,
+.btn-tag:hover {
+    transform: translateY(-1px);
+    background-color: #fff;
+    border-color: transparent;
+    box-shadow: 0 2px 8px rgb(16 16 16 / 20%);
+    color: #101010 !important;
+}
+
+.cart-count{
+    position: absolute;
+    text-align: center;
+    font-size: 0.9rem;
+    top: 18px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    color: #fff;
+    background-color: #0c3390;
+}

@@ -1,0 +1,156 @@
+.slides{
+    width: 70%;
+    margin: auto;
+    padding: 2.5em 0;
+}
+
+.slides-layout{
+    height: 420px;
+    position: relative;
+    width: 100%;
+    z-index: 2;
+    max-width: 100%;
+}
+
+.slide-items{
+    opacity: 0;
+}
+
+.slide-items[data-active]{
+    opacity: 1;
+    z-index: 1;
+}
+
+.slide-image{
+    display: inline-block;
+    position: absolute;
+    z-index: -1;
+    margin-top: 0;
+    bottom: 40px;
+}
+
+.slide-image img{
+    margin-left: auto;
+    max-width: 100%;
+    max-height: 350px;
+    border-style: none;
+    display: block;
+}
+
+.slide-info{
+    position: absolute;
+    align-items: flex-end;
+    right: 4rem;
+    text-align: right;
+}
+
+.slide-info .slide-heading{
+    font-size: 2.4rem;
+    font-weight: 900;
+    margin-bottom: 0;
+    text-transform: uppercase;
+}
+
+.slide-info .slide-colour{
+    color: #4c4c4c;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+.slide-info .slide-link{
+    background-color: #101010;
+    color: #fff;
+    padding: 1em 1.5em;
+    text-transform: uppercase;
+    padding-top: 10px;
+}
+
+.slide-nav-con{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    top: 390px;
+    left: 890px;
+    width: 80%;
+}
+
+
+.slide-nav-rside div{
+    text-align: center;
+    display: inline-block;
+}
+
+.slide-nav{
+    align-items: baseline;
+    bottom: 20px;
+    color: #101010;
+    font-size: 1.6rem;
+    position: absolute;
+    z-index: 3;
+}
+
+.slide-nav_left{
+    margin-right: 0.7em;
+    cursor: pointer;
+}
+
+.slide-nav_inner{
+    display: flex;
+    justify-content: center;
+    width: 70px;
+}
+
+.slide-nav-right{
+    margin-left: 0.5em;
+    cursor: pointer;
+}
+
+.slide-nav .bx{
+    font-size: 1.6em !important;
+}
+
+.slide-nav-inner_active{
+    font-weight: 900;
+    position: relative;
+    font-size: 1.8rem;
+    margin-right: 0.05em;
+    bottom: 8px;
+}
+
+.slide-nav-inner_total{
+    font-weight: 800;
+    position: relative;
+    font-size: 1.2rem;
+    margin-right: 0.25em;
+    bottom: 8px;
+}
+
+.ftr-divider-m{
+    margin-top: 1.5rem !important;
+    margin-bottom: 3.8rem !important;
+    background: transparent;
+    box-shadow: 0 1px 0px rgb(0 0 0 / 5%);
+    height: 0.2rem;
+    margin: 0 auto;
+    width: 70%;
+}
+
+.ftr-divider-l{
+    bottom: -1rem;
+    position: absolute;
+    background: transparent;
+    box-shadow: 0 2px 0px rgb(0 0 0 / 60%);
+    height: 0.5rem;
+    width: 50%;
+}
+
+.ftr-divider-r{
+    bottom: -1rem;
+    right: 1rem;
+    position: absolute;
+    background: transparent;
+    box-shadow: 0 2px 0px rgb(0 0 0 / 60%);
+    height: 0.5rem;
+    width: 50%;
+}

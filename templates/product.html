@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="page-content">
+    <div class="page-inner">
+        <div class="product-content">
+            <div class="pc-image">
+                <img src="{{product.images.url}}" alt="">
+            </div>
+            <div class="product-info-container">
+                <div class="product-header">
+                    <input type="hidden" value="{{product.id}}" class="product_id"></input>
+                    <div class="main-hdr">{{product.product_name}}</div>
+                    <div class="sec-hdr">{{product.brand_name}}</div>
+                </div>
+                <div class="ftr-divider-m p-divider"></div>
+                <form action="" class="product-detail-form">
+                    {% csrf_token %}
+                    <div class="product-sizes">
+                        {% for sizes in product_availability %}
+                        <label class="product-size" value="{{sizes.size}}">{{sizes.size}}</label>
+                        {% endfor %}
+                    </div>
+                    {% if product.discount_price != None %}
+                    <div class="product-price" style="color: red;">£{{product.discount_price|floatformat:2}} <strike style="font-size: 1.2rem;">£{{product.price|floatformat:2}}</strike></div>
+                    {% else %}
+                    <div class="product-price">£{{product.price|floatformat:2}}</div>
+                    {% endif %}
+                    <button class="submit addtoCartbtn">Add To Cart</button>
+                </form>
+                <div class="ftr-divider-m d-divider"></div>
+                <div class="product-desc">
+                    <div class="desc-header">DESCRIPTION</div>
+                    <div class="desc">{{product.description}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="alert"></div>
+{% endblock content %}
+{% block script %}
+<script>
+// highlights the first size in the product size list
+$(function() {
+    $('label.product-size').first().addClass('picked');
+});
+
+// makes it so that the user is able to pick his/her product size
+$('label.product-size').on("click", function(e) {
+    $('label.product-size').removeClass('picked')
+    $(this).addClass('picked')
+});
+
+// cart functionaility using AJAX
+$('.addtoCartbtn').click(function(e){
+    e.preventDefault();
+    var product_id = $(this).closest('.product-info-container').find('.product_id').val();
+    var product_size = $(this).closest('.product-detail-form').find('.picked').text();
+    var token = $('input[name=csrfmiddlewaretoken]').val();
+
+    if (product_size == ''){
+        let status = document.querySelector(".alert")
+        if(status.style.display = "none")
+            status.style.display = "block";
+            status.innerHTML = "Please enter a product size";
+
+        function closeMessage(){
+            document.querySelector(".alert").style.display="none";
+        }
+        window.setTimeout(closeMessage, 3000)
+    }else{
+        $.ajax({
+        method: "POST",
+        url: "/add-to-cart",
+        data: {
+            'product_id': product_id,
+            'product_size': product_size,
+            csrfmiddlewaretoken: token
+        },
+        success: function(response){
+            // status
+            data = response.status
+            var alert = $('.alert');
+            $(alert).addClass('visible').text(data).fadeToggle(3000);
+            
+            // updating cart
+            cart_data = response.products_in_cart
+            if(cart_data > 0){
+                $('#cart-count-con').append(
+                    `<span class="cart-count">${cart_data}</span>`
+                )
+            }
+            //data = response.status
+            //let status = document.querySelector(".alert")
+            //if(status.style.display = "none")
+            //    status.style.display = "block";
+            //    status.innerHTML = data;
+
+            //function closeMessage(){
+            //    document.querySelector(".alert").style.display="none";
+            //}
+            //window.setTimeout(closeMessage, 3000)
+        }
+    }); 
+    }
+});
+</script>
+{% endblock %}

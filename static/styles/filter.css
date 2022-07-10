@@ -1,0 +1,55 @@
+.filter-list{
+    width: 260px;
+    flex-direction: column;
+}
+
+.header-filter{
+    padding: 10px;
+    font-size: 1.5rem;
+    background-color: #101010;
+    color:  #fff;
+}
+
+.list{
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    padding: 12px;
+    cursor: pointer;
+}
+
+.list:hover{
+    border: 1px solid #ddd;
+    background-color: #ddd;
+}
+
+#filter-list-price{
+    display: block;
+}
+
+.price-hdr{
+    display: flex;
+    justify-content: space-between;
+}
+
+#open-btn{
+    cursor: pointer;
+    position: relative;
+    top: 3px;
+}
+
+#open-btn:hover{
+    color: #ddd;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.show{
+    display: block !important;
+}
+
+.clicked{
+    border: 1px solid #ddd;
+    background-color: #ddd;
+}

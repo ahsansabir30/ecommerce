@@ -1,0 +1,113 @@
+.layout-cards{
+    max-width: 1100px;
+    margin: auto;
+}
+
+.row-header{
+    align-items: center;
+    display: flex;
+    position: relative;
+}
+
+.row-title{
+    font-weight: 900;
+    font-size: 1.4rem;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.row-arrows{
+    margin-left: auto;
+    font-size: 1.8rem;
+    cursor: pointer;
+    visibility: hidden;
+}
+
+.home-hover:hover .row-arrows{
+    visibility: visible;
+}
+
+.left-arrow:hover,
+.right-arrow:hover{
+    color: #0c3390;
+}
+
+.left-arrow,
+.right-arrow{
+    display: inline-block;
+    padding: 1rem;
+    z-index: 1;
+}
+
+.row-container{
+    position: relative;
+    bottom: 1em;
+}
+
+.row-tiles::-webkit-scrollbar {
+    display: none;
+}
+
+.row-tiles{
+    display: flex;
+    align-items: flex-start;
+    margin-left: -4px;
+    margin-right: -4px;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+}
+
+.row-cards{
+    min-width: 222px;
+    cursor: pointer;
+    list-style: none;
+    transition: transform 0.4s ease;
+}
+
+.row-cards:hover{
+    transform: translateY(-0.3rem);
+}
+
+.card-inner{
+    display: block;
+}
+
+.row-card-picture{
+    text-align: center;
+    overflow: hidden;
+}
+
+.row-card-picture img{
+    overflow: hidden;
+    width: 221px;
+}
+
+.row-card-content{
+    padding-left: 1em;
+    padding-right: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    width: 100%;
+    position: relative;
+    bottom: 20px;
+}
+
+.product-card-head{
+    width: 100%;
+}
+
+.product-card-title{
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0;
+    width: 100%;
+}
+
+.product-card-price{
+    font-size: 1.1rem;
+    font-weight: 900;
+    margin-top: 0.5rem;
+    text-align: center;
+    width: 100%;
+}
