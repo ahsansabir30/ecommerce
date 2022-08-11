@@ -1,5 +1,6 @@
 # Ecommerce Website
 Ecommerce Store inspired by Laced and Footlocker 
+
 Technology used:
 - Django
 - HTML, CSS
