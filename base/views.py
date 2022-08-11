@@ -361,7 +361,7 @@ def ProcessOrder(request):
 # stripe listen --forward-to localhost:8000/stripe_webhook/
 @csrf_exempt
 def StripeWebhook(request):
-    endpoint_secret = "whsec_d843fde37f3ca988084e4ee2e9d21c1b7375f0ae1b7b5b006c6151230947bdbc"
+    endpoint_secret = ""
 
     payload = request.body
     sig_header = request.META['HTTP_STRIPE_SIGNATURE']
