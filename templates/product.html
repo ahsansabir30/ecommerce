@@ -17,9 +17,13 @@
                 <form action="" class="product-detail-form">
                     {% csrf_token %}
                     <div class="product-sizes">
+                        {% if product_availability %}
                         {% for sizes in product_availability %}
                         <label class="product-size" value="{{sizes.size}}">{{sizes.size}}</label>
                         {% endfor %}
+                        {% else %}
+                        <h4 class="no-size">Product is out of Stock</>
+                        {% endif %}
                     </div>
                     {% if product.discount_price != None %}
                     <div class="product-price" style="color: red;">£{{product.discount_price|floatformat:2}} <strike style="font-size: 1.2rem;">£{{product.price|floatformat:2}}</strike></div>

@@ -132,3 +132,9 @@
 .visible{
     display: block;
 }
+
+.no-size{
+    width: 200px;
+    color: red;
+    font-size: 1.2rem;
+}

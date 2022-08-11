@@ -5,8 +5,8 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Stripe API Keys 
-STRIPE_API_KEY_PUBLIC = ''
-STRIPE_API_KEY_HIDDEN = ''
+STRIPE_API_KEY_PUBLIC = 'pk_test_51LArjnIL7QKm0cIi8SgoD6BA79uZjq8cgjckXlZLaHL0KibceO7xpNVTfwoHOsfXKXbwbrqFFxecWm1DyVKBaoEM00WpIuQlxI'
+STRIPE_API_KEY_HIDDEN = 'sk_test_51LArjnIL7QKm0cIiXDZmnHBH8aswcVmTAYFeZ6YfwVmrRIFcm2pJBa6Ii7eARlcP2duoiszl9b8hhAU969Liflv800gQYsKfep'
 
 # If our stipe api keys are enviroment variables, uncomment below (and uncomment from os import getenv)
 #STRIPE_API_KEY_PUBLIC = getenv('STRIPE_API_KEY_PUBLIC')

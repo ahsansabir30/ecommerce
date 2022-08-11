@@ -132,7 +132,7 @@ dmypy.json
 .db
 
 # ignore stripe exe
-.exe
+stripe.exe
 
 # ignore image files 
-dir_to_ignore/media/images
+dir_to_ignore/media
