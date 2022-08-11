@@ -42,7 +42,9 @@ The webhook secret has to be inserted in the views.py file and exactly under the
  
 ## Application
 ![home](https://user-images.githubusercontent.com/92265482/184150824-7b257498-9ab8-4d3d-9a7c-0dc247dee93a.gif)
- 
+
+![purchase](https://user-images.githubusercontent.com/92265482/184155329-401d3198-0497-4d23-9adc-3a09eafd8211.gif)
+
 ## Future
 The website currently is not responsive and does not adjust depending on user screen size - therefore it is extremely important to add this functionality, as for the website to be set up in a real environment this is critical (and especially if it is a ecommerce store).
  
