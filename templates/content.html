@@ -46,7 +46,7 @@
                                 <span class="price">£25 & Under</span>
                             </li>
                             <li class="list price_list" id="price-range">
-                                <span class="price">£50 TO £100</span>
+                                <span class="price">£26 to £100</span>
                             </li>
                             <li class="list price_list" id="price-range">
                                 <span class="price">£101 to £200</span>
@@ -141,7 +141,7 @@ $('li.list').on("click", function(e) {
             if(filter_price === "All Prices"){
                 $(selector).addClass('show');
                 $(selector).removeClass('hidden');
-            }else if(filter_price === "£25 & Under"){
+            }else if(filter_price === "£25 & under"){
                 if(product_price <= 25){
                 $(selector).addClass('show');
                 $(selector).removeClass('hidden');
@@ -149,8 +149,8 @@ $('li.list').on("click", function(e) {
                 $(selector).removeClass('show');
                 $(selector).addClass('hidden'); 
                 }
-            }else if(filter_price === "£50 to £100"){
-                if(product_price >= 50 && product_price <= 100){
+            }else if(filter_price === "£26 to £100"){
+                if(product_price >= 26 && product_price <= 100){
                 $(selector).addClass('show');
                 $(selector).removeClass('hidden');
                 }else{
@@ -194,8 +194,8 @@ $('li.list').on("click", function(e) {
                 $(selector).removeClass('show');
                 $(selector).addClass('hidden'); 
             }
-        }else if(product_brand ===  filter_brand && filter_price === "£50 to £100"){
-            if(product_price >= 50 && product_price <= 100){
+        }else if(product_brand ===  filter_brand && filter_price === "£26 to £100"){
+            if(product_price >= 26 && product_price <= 100){
                 $(selector).addClass('show');
                 $(selector).removeClass('hidden');
             }else{

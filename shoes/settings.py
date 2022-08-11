@@ -1,12 +1,16 @@
 from pathlib import Path
 import os
-
+#from os import getenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Stripe API Keys
+# Stripe API Keys 
 STRIPE_API_KEY_PUBLIC = ''
 STRIPE_API_KEY_HIDDEN = ''
+
+# If our stipe api keys are enviroment variables, uncomment below (and uncomment from os import getenv)
+#STRIPE_API_KEY_PUBLIC = getenv('STRIPE_API_KEY_PUBLIC')
+#STRIPE_API_KEY_HIDDEN = getenv('STRIPE_API_KEY_HIDDEN')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
