@@ -4,9 +4,21 @@ Technology used:
 - Django
 - HTML, CSS
 - Javascript
-- Ajax (JS)
+- AJAX (JS)
 - DOM Manipulation
 - Stripe API, Stripe Webhook
+
+## Application
+![home](https://user-images.githubusercontent.com/92265482/184150824-7b257498-9ab8-4d3d-9a7c-0dc247dee93a.gif)
+If the end user has inserted their contact details before, and has ticked the default address box, it will save the details as being default. So when an new order is placed by the end user, they do not need retype their contact details (unless specified). 
+![purchase](https://user-images.githubusercontent.com/92265482/184155329-401d3198-0497-4d23-9adc-3a09eafd8211.gif)
+![image](https://user-images.githubusercontent.com/92265482/184163051-4c020bf0-b5ed-41a2-be4e-ca682ea166b8.png)
+Here we can see the user has placed an order, and has chosen an alternative address. However payment failed, this was due to the fact our webhook was not setup in this image (by purpose), to show the outcome of inserting incorrect details in stripe.
+![payment-failure](https://user-images.githubusercontent.com/92265482/184157234-bfe20db6-485a-4f47-a043-8c1e2fb24898.gif)
+We can also add items in a shopping cart without the need of signing in through the use of cookies (whereby we are allocating an id to the end users technology) - however if the user wants to place an order, he/she has to sign in.
+![cart](https://user-images.githubusercontent.com/92265482/184161497-1dbbbaa6-b95b-4a03-bcaa-4f24eb34d1de.gif)
+If the product is not in stock (i.e there is not size available) - the following will be displayed
+![image](https://user-images.githubusercontent.com/92265482/184162636-d66fe763-169d-4af9-b91c-f780a7bce656.png)
 
 ## Setup
 ### Installation
@@ -40,11 +52,6 @@ The webhook secret has to be inserted in the views.py file and exactly under the
  
 `stripe listen --forward-to localhost:8000/stripe_webhook/`
  
-## Application
-![home](https://user-images.githubusercontent.com/92265482/184150824-7b257498-9ab8-4d3d-9a7c-0dc247dee93a.gif)
-
-![purchase](https://user-images.githubusercontent.com/92265482/184155329-401d3198-0497-4d23-9adc-3a09eafd8211.gif)
-
 ## Future
 The website currently is not responsive and does not adjust depending on user screen size - therefore it is extremely important to add this functionality, as for the website to be set up in a real environment this is critical (and especially if it is a ecommerce store).
  
