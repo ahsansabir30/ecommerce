@@ -41,7 +41,7 @@ The webhook secret has to be inserted in the views.py file and exactly under the
 `stripe listen --forward-to localhost:8000/stripe_webhook/`
  
 ## Application
-
+![home](https://user-images.githubusercontent.com/92265482/184150824-7b257498-9ab8-4d3d-9a7c-0dc247dee93a.gif)
  
 ## Future
 The website currently is not responsive and does not adjust depending on user screen size - therefore it is extremely important to add this functionality, as for the website to be set up in a real environment this is critical (and especially if it is a ecommerce store).
