@@ -57,3 +57,5 @@ The webhook secret has to be inserted in the views.py file and exactly under the
 The website currently is not responsive and does not adjust depending on user screen size - therefore it is extremely important to add this functionality, as for the website to be set up in a real environment this is critical (and especially if it is a ecommerce store).
  
 Another adjustment needed is to create an order after a payment has been made and not before. This will make it so if the user does cancel their order (by closing the payment page), there isn't an order created for that end user (thus keeping our database size at a minimum).
+
+Finally is to included automated test and to refactor the code (both python code and html). 
